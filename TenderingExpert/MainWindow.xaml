@@ -7,6 +7,24 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="6*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="10*"/>
+        </Grid.RowDefinitions>
+
+        <TextBox x:Name="WordPath" Margin="5" TextWrapping="Wrap" Text="选择word文件路径" VerticalContentAlignment="Center"/>
+        <Button x:Name="SelectFile" Content="浏览" Grid.Row="0" Grid.Column="1" Margin="5" Click="SelectFile_OnClick"/>
+        <Button x:Name="StartRead" Content="读取" Grid.Row="0" Grid.Column="2" Margin="5" Click="StartRead_OnClick"/>
+        <ScrollViewer Margin="10" Grid.Row="1" Grid.ColumnSpan="3" Grid.Column="0">
+            <ScrollViewer.Content>
+                <TextBlock x:Name="Result" TextWrapping="Wrap" Text="结果"/>
+            </ScrollViewer.Content>
+        </ScrollViewer>
+
     </Grid>
 </Window>

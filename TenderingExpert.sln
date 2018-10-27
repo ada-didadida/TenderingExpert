@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28010.2046
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TenderingExpert", "TenderingExpert\TenderingExpert.csproj", "{C6A031B4-070F-47BE-AB60-4C3F7C5F4C08}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordOperator", "WordOperator\WordOperator.csproj", "{346E600E-001F-49EA-A106-DC44A5982F8A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{C6A031B4-070F-47BE-AB60-4C3F7C5F4C08}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C6A031B4-070F-47BE-AB60-4C3F7C5F4C08}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C6A031B4-070F-47BE-AB60-4C3F7C5F4C08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{346E600E-001F-49EA-A106-DC44A5982F8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{346E600E-001F-49EA-A106-DC44A5982F8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{346E600E-001F-49EA-A106-DC44A5982F8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{346E600E-001F-49EA-A106-DC44A5982F8A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

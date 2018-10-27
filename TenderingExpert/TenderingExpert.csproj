@@ -94,5 +94,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WordOperator\WordOperator.csproj">
+      <Project>{346E600E-001F-49EA-A106-DC44A5982F8A}</Project>
+      <Name>WordOperator</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

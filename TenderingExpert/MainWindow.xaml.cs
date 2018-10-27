@@ -1,17 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Microsoft.Win32;
+using WordOperator;
 
 namespace TenderingExpert
 {
@@ -23,6 +13,38 @@ namespace TenderingExpert
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void SelectFile_OnClick(object sender, RoutedEventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                CheckFileExists = true,
+                Filter = "Word File(*.doc, *.docx) |*doc;*.docx"
+            };
+
+            if (openFileDialog.ShowDialog() == true)
+                WordPath.Text = openFileDialog.FileName;
+        }
+
+        private void StartRead_OnClick(object sender, RoutedEventArgs e)
+        {
+            var wordPath = WordPath.Text;
+            if (!string.IsNullOrEmpty(wordPath))
+            {
+                WordReader reader = new WordReader(wordPath);
+                try
+                {
+                    reader.StartRead();
+                    Result.Text = String.Empty;
+                    Result.Text += reader.GetParagraphsCount() + "\n";
+                    Result.Text += reader.GetAllContent();
+                }
+                catch (Exception exception)
+                {
+                    Result.Text = exception.Message;
+                }
+            }
         }
     }
 }
