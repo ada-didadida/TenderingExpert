@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using Microsoft.Win32;
+using TenderingExpert.Data;
 using WordOperator;
 
 namespace TenderingExpert
@@ -36,9 +37,8 @@ namespace TenderingExpert
                 try
                 {
                     reader.StartRead();
-                    Result.Text = String.Empty;
-                    Result.Text += reader.GetParagraphsCount() + "\n";
-                    Result.Text += reader.GetAllContent();
+
+                    TenderingInformation information = new TenderingInformation(reader);
                 }
                 catch (Exception exception)
                 {

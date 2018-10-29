@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Office.Interop.Word;
 
 namespace WordOperator
@@ -71,6 +68,22 @@ namespace WordOperator
                 result += paragraph.Range.Text + "\n";
 
             return result;
+        }
+
+        public string FindKeyValue(string key)
+        {
+            Range range = wordDocument.Range(0, 0);
+            while (range.Find.Execute(key))
+            {
+                range.MoveEndUntil('\n');
+                var result = range.Text.Replace(key, "");
+                if(string.IsNullOrEmpty(result))
+                    continue;
+
+                return result;
+            }
+
+            return null;
         }
     }
 }
