@@ -75,7 +75,7 @@ namespace WordOperator
             Range range = wordDocument.Range(0, 0);
             while (range.Find.Execute(key))
             {
-                range.MoveEndUntil('\n');
+                range.MoveEndUntil(Environment.NewLine);
                 var result = range.Text.Replace(key, "");
                 if(string.IsNullOrEmpty(result))
                     continue;
