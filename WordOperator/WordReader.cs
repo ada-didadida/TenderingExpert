@@ -85,5 +85,13 @@ namespace WordOperator
 
             return null;
         }
+
+        public void Close()
+        {
+            if (wordApplication == null) return;
+
+            wordDocument?.Close(ref unknown, ref unknown, ref unknown);
+            wordApplication.Quit(ref unknown, ref unknown, ref unknown);
+        }
     }
 }

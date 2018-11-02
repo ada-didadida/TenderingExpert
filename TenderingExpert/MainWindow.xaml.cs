@@ -1,7 +1,4 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
+﻿using System.Windows;
 using Microsoft.Win32;
 using TenderingExpert.Data;
 using WordOperator;
@@ -21,6 +18,7 @@ namespace TenderingExpert
         }
 
         public TenderingInformation Information { get; set; } = new TenderingInformation();
+        public WordReader WordReader;
 
         private void SelectFile_OnClick(object sender, RoutedEventArgs e)
         {
@@ -39,11 +37,16 @@ namespace TenderingExpert
             var wordPath = WordPath.Text;
             if (!string.IsNullOrEmpty(wordPath))
             {
-                WordReader reader = new WordReader(wordPath);
-                reader.StartRead();
+                WordReader = new WordReader(wordPath);
+                WordReader.StartRead();
 
-                Information.LoadInfo(reader);
+                Information.LoadInfo(WordReader);
             }
+        }
+
+        private void Window_Closed(object sender, System.EventArgs e)
+        {
+            WordReader.Close();
         }
     }
 }
