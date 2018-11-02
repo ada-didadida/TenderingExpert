@@ -21,6 +21,8 @@ namespace TenderingExpert.Data
         private string agencyContactPhoneNumber;
         private string agencyEmail;
         private string agencyAddress;
+        private string tenderingAddress;
+        private string tenderingDate;
 
         public string ProjectName
         {
@@ -142,6 +144,26 @@ namespace TenderingExpert.Data
             }
         }
 
+        public string TenderingAddress
+        {
+            get => tenderingAddress;
+            set
+            {
+                tenderingAddress = value;
+                OnPropertyChanged(nameof(TenderingAddress));
+            }
+        }
+
+        public string TenderingDate
+        {
+            get => tenderingDate;
+            set
+            {
+                tenderingDate = value;
+                OnPropertyChanged(nameof(TenderingDate));
+            }
+        }
+
         public void LoadInfo(WordReader reader)
         {
             ProjectName = reader.FindKeyValue("项目名称：");
@@ -163,6 +185,9 @@ namespace TenderingExpert.Data
 
             AgencyEmail = reader.FindKeyValue("电子邮箱：");
             AgencyAddress = reader.FindKeyValue("代理机构地址：");
+
+            TenderingAddress = reader.FindKeyValue("开标地址：");
+            TenderingDate = reader.FindKeyValue("开标时间：");
         }
 
 

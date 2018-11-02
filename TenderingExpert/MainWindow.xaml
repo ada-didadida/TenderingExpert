@@ -39,6 +39,8 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <TextBlock Margin="2" TextWrapping="Wrap" Text="项目名称：" VerticalAlignment="Center"/>
                 <TextBlock Margin="2" TextWrapping="Wrap" Text="项目编号：" VerticalAlignment="Center" Grid.Row="1"
@@ -63,6 +65,10 @@
                            Grid.Column="0" />
                 <TextBlock Margin="2" TextWrapping="Wrap" Text="代理机构地址：" VerticalAlignment="Center" Grid.Row="11"
                            Grid.Column="0" />
+                <TextBlock Margin="2" TextWrapping="Wrap" Text="开标地址：" VerticalAlignment="Center" Grid.Row="12"
+                           Grid.Column="0" />
+                <TextBlock Margin="2" TextWrapping="Wrap" Text="开标时间：" VerticalAlignment="Center" Grid.Row="13"
+                           Grid.Column="0" />
 
                 <TextBox Grid.Row="0" Grid.Column="1" Margin="2" TextWrapping="Wrap" Text="{Binding ProjectName}" VerticalContentAlignment="Center"/>
                 <TextBox Grid.Row="1" Grid.Column="1" Margin="2" TextWrapping="Wrap" Text="{Binding ProjectCode}" VerticalContentAlignment="Center"/>
@@ -76,6 +82,8 @@
                 <TextBox Grid.Row="9" Grid.Column="1" Margin="2" TextWrapping="Wrap" Text="{Binding AgencyContactPhoneNumber}" VerticalContentAlignment="Center"/>
                 <TextBox Grid.Row="10" Grid.Column="1" Margin="2" TextWrapping="Wrap" Text="{Binding AgencyEmail}" VerticalContentAlignment="Center"/>
                 <TextBox Grid.Row="11" Grid.Column="1" Margin="2" TextWrapping="Wrap" Text="{Binding AgencyAddress}" VerticalContentAlignment="Center"/>
+                <TextBox Grid.Row="12" Grid.Column="1" Margin="2" TextWrapping="Wrap" Text="{Binding TenderingAddress}" VerticalContentAlignment="Center"/>
+                <TextBox Grid.Row="13" Grid.Column="1" Margin="2" TextWrapping="Wrap" Text="{Binding TenderingDate}" VerticalContentAlignment="Center"/>
 
             </Grid>
         </ScrollViewer>
