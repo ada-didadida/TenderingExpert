@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 using Microsoft.Win32;
 using TenderingExpert.Data;
 using WordOperator;
@@ -14,7 +16,11 @@ namespace TenderingExpert
         public MainWindow()
         {
             InitializeComponent();
+
+            InformationGrid.DataContext = Information;
         }
+
+        public TenderingInformation Information { get; set; } = new TenderingInformation();
 
         private void SelectFile_OnClick(object sender, RoutedEventArgs e)
         {
@@ -34,16 +40,9 @@ namespace TenderingExpert
             if (!string.IsNullOrEmpty(wordPath))
             {
                 WordReader reader = new WordReader(wordPath);
-                try
-                {
-                    reader.StartRead();
+                reader.StartRead();
 
-                    TenderingInformation information = new TenderingInformation(reader);
-                }
-                catch (Exception exception)
-                {
-                    Result.Text = exception.Message;
-                }
+                Information.LoadInfo(reader);
             }
         }
     }

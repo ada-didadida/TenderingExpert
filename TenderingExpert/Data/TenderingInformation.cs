@@ -1,46 +1,155 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
-using System.Reflection;
+using System.Runtime.CompilerServices;
+using TenderingExpert.Annotations;
 using WordOperator;
 
 namespace TenderingExpert.Data
 {
-    class TenderingInformation
+    public class TenderingInformation : INotifyPropertyChanged
     {
-        public string ProjectName { get; set; }
+        private string projectName;
+        private string projectCode;
+        private string projectContactPerson;
+        private string projectContactPhoneNumber;
+        private string purchaser;
+        private string purchaserAddress;
+        private string purchaserContact;
+        private string agency;
+        private string agencyContactPerson;
+        private string agencyContactPhoneNumber;
+        private string agencyEmail;
+        private string agencyAddress;
 
-        public string ProjectCode { get; set; }
+        public string ProjectName
+        {
+            get => projectName;
+            set
+            {
+                projectName = value;
+                OnPropertyChanged(nameof(ProjectName));
+            }
+        }
 
-        public List<string> ProjectContactPerson { get; set; }
+        public string ProjectCode
+        {
+            get => projectCode;
+            set
+            {
+                projectCode = value;
+                OnPropertyChanged(nameof(ProjectCode));
+            }
+        }
 
-        public List<string> ProjectContactPhoneNumber { get; set; }
+        public string ProjectContactPerson
+        {
+            get => projectContactPerson;
+            set
+            {
+                projectContactPerson = value;
+                OnPropertyChanged(nameof(ProjectContactPerson));
+            }
+        }
 
-        public string Purchaser { get; set; }
+        public string ProjectContactPhoneNumber
+        {
+            get => projectContactPhoneNumber;
+            set
+            {
+                projectContactPhoneNumber = value;
+                OnPropertyChanged(nameof(ProjectContactPhoneNumber));
+            }
+        }
 
-        public string PurchaserAddress { get; set; }
+        public string Purchaser
+        {
+            get => purchaser;
+            set
+            {
+                purchaser = value;
+                OnPropertyChanged(nameof(Purchaser));
+            }
+        }
 
-        public string PurchaserContact { get; set; }
+        public string PurchaserAddress
+        {
+            get => purchaserAddress;
+            set
+            {
+                purchaserAddress = value;
+                OnPropertyChanged(nameof(PurchaserAddress));
+            }
+        }
 
-        public string Agency { get; set; }
+        public string PurchaserContact
+        {
+            get => purchaserContact;
+            set
+            {
+                purchaserContact = value;
+                OnPropertyChanged(nameof(PurchaserContact));
+            }
+        }
 
-        public List<string> AgencyContactPerson { get; set; }
+        public string Agency
+        {
+            get => agency;
+            set
+            {
+                agency = value;
+                OnPropertyChanged(nameof(Agency));
+            }
+        }
 
-        public List<string> AgencyContactPhoneNumber { get; set; }
+        public string AgencyContactPerson
+        {
+            get => agencyContactPerson;
+            set
+            {
+                agencyContactPerson = value;
+                OnPropertyChanged(nameof(AgencyContactPerson));
+            }
+        }
 
-        public string AgencyEmail { get; set; }
+        public string AgencyContactPhoneNumber
+        {
+            get => agencyContactPhoneNumber;
+            set
+            {
+                agencyContactPhoneNumber = value;
+                OnPropertyChanged(nameof(AgencyContactPhoneNumber));
+            }
+        }
 
-        public string AgencyAddress { get; set; }
+        public string AgencyEmail
+        {
+            get => agencyEmail;
+            set
+            {
+                agencyEmail = value;
+                OnPropertyChanged(nameof(AgencyEmail));
+            }
+        }
 
-        public TenderingInformation(WordReader reader)
+        public string AgencyAddress
+        {
+            get => agencyAddress;
+            set
+            {
+                agencyAddress = value;
+                OnPropertyChanged(nameof(AgencyAddress));
+            }
+        }
+
+        public void LoadInfo(WordReader reader)
         {
             ProjectName = reader.FindKeyValue("项目名称：");
             ProjectCode = reader.FindKeyValue("项目编号：");
 
-            var persons = reader.FindKeyValue("项目联系人：");
-            ProjectContactPerson = persons.Split('，').ToList();
+            ProjectContactPerson = reader.FindKeyValue("项目联系人：");
 
-            var phoneNumber = reader.FindKeyValue("项目联系电话：");
-            ProjectContactPhoneNumber = phoneNumber.Split('，').ToList();
+            ProjectContactPhoneNumber = reader.FindKeyValue("项目联系电话：");
 
             Purchaser = reader.FindKeyValue("采购人：");
             PurchaserAddress = reader.FindKeyValue("地址：");
@@ -48,14 +157,21 @@ namespace TenderingExpert.Data
 
             Agency = reader.FindKeyValue("代理机构：");
 
-            var agencyPersons = reader.FindKeyValue("代理机构联系人：");
-            AgencyContactPerson = agencyPersons.Split('，').ToList();
+            AgencyContactPerson = reader.FindKeyValue("代理机构联系人：");
 
-            var agencyPhoneNumber = reader.FindKeyValue("电话：");
-            AgencyContactPhoneNumber = agencyPhoneNumber.Split('，').ToList();
+            AgencyContactPhoneNumber = reader.FindKeyValue("电话：");
 
             AgencyEmail = reader.FindKeyValue("电子邮箱：");
             AgencyAddress = reader.FindKeyValue("代理机构地址：");
+        }
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
