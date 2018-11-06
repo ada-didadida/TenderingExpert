@@ -86,6 +86,34 @@ namespace WordOperator
             return null;
         }
 
+        /// <summary>
+        /// 获取表格内容
+        /// 所有索引从1开始！
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public List<List<string>> GetTableContent(int index)
+        {
+            if (wordDocument != null)
+            {
+                var result = new List<List<string>>();
+
+                var table = wordDocument.Tables[index];
+                for (int i = 1; i <= table.Rows.Count; i++)
+                {
+                    var row = new List<string>();
+                    for (int j = 1; j <= table.Columns.Count; j++)
+                        row.Add(table.Cell(i, j).Range.Text);
+
+                    result.Add(row);
+                }
+
+                return result;
+            }
+
+            return null;
+        }
+
         public void Close()
         {
             if (wordApplication == null) return;
