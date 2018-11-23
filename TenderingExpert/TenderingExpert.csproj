@@ -65,7 +65,9 @@
     </Compile>
     <Compile Include="Data\PackageInformation.cs" />
     <Compile Include="Data\PurchaseInformation.cs" />
+    <Compile Include="Data\TenderForm.cs" />
     <Compile Include="Data\TenderingInformation.cs" />
+    <Compile Include="Data\XmlOperation.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -99,10 +101,20 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ExcelOperator\ExcelOperator.csproj">
+      <Project>{a201dd11-ee3e-4656-ad0a-1db0005780f3}</Project>
+      <Name>ExcelOperator</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WordOperator\WordOperator.csproj">
       <Project>{346E600E-001F-49EA-A106-DC44A5982F8A}</Project>
       <Name>WordOperator</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="Config\ExcelTemplate.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

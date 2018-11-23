@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
+using ExcelOperator;
 using Microsoft.Win32;
 using TenderingExpert.Data;
 using WordOperator;
@@ -18,11 +19,16 @@ namespace TenderingExpert
         }
 
         public TenderingInformation TenderInformation { get; set; } = new TenderingInformation();
+
+        public TenderForm TenderExcelForm { get; set; } = new TenderForm();
+
         public List<PackageInformation> PackageInformations { get; set; }
 
         private WordReader tenderWordReader;
 
         private WordReader purchaseWordReader;
+
+        private ExcelWriter excelWriter;
 
         private void SelectTenderFile_OnClick(object sender, RoutedEventArgs e)
         {
@@ -68,6 +74,7 @@ namespace TenderingExpert
         {
             tenderWordReader?.Close();
             purchaseWordReader?.Close();
+            excelWriter?.Close();
         }
 
         private void SelectPurchaseFile_OnClick(object sender, RoutedEventArgs e)
@@ -80,6 +87,21 @@ namespace TenderingExpert
 
             if (openFileDialog.ShowDialog() == true)
                 PurchaseDoc.Text = openFileDialog.FileName;
+        }
+
+        private void CreateExcel_OnClick(object sender, RoutedEventArgs e)
+        {
+            excelWriter = new ExcelWriter();
+            excelWriter.Create();
+            
+            TenderExcelForm.TenderInfo = TenderInformation;
+            TenderExcelForm.PackageInfo = PackageInformations[0];
+            
+            TenderExcelForm.Init();
+            TenderExcelForm.FillContent(excelWriter);
+            
+            excelWriter.SaveAs("D:\\评标表.xls");
+            excelWriter.Close();
         }
     }
 }

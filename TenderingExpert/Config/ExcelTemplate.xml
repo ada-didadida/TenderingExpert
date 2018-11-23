@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Excel>
+    <SheetInformation>
+        <Name>test</Name>
+        <MergeCellsPosition>
+            <Pairs>
+                <Left X="1" Y="1"></Left>
+                <Right X="1" Y="6"></Right>
+            </Pairs>
+            <Pairs>
+                <Left X="1" Y="1"></Left>
+                <Right X="1" Y="6"></Right>
+            </Pairs>
+        </MergeCellsPosition>
+        <BorderArea>
+            <Pairs>
+                <Left X="1" Y="1"></Left>
+                <Right X="1" Y="6"></Right>
+            </Pairs>
+        </BorderArea>
+        <Information>
+            <Cell X="1" Y="1" Value="test" FontName="宋体" FontSize="10" FontAlignment="0" Bold="1"></Cell>
+        </Information>
+    </SheetInformation>
+</Excel>

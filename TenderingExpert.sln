@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TenderingExpert", "Tenderin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordOperator", "WordOperator\WordOperator.csproj", "{346E600E-001F-49EA-A106-DC44A5982F8A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelOperator", "ExcelOperator\ExcelOperator.csproj", "{A201DD11-EE3E-4656-AD0A-1DB0005780F3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{346E600E-001F-49EA-A106-DC44A5982F8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{346E600E-001F-49EA-A106-DC44A5982F8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{346E600E-001F-49EA-A106-DC44A5982F8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A201DD11-EE3E-4656-AD0A-1DB0005780F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A201DD11-EE3E-4656-AD0A-1DB0005780F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A201DD11-EE3E-4656-AD0A-1DB0005780F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A201DD11-EE3E-4656-AD0A-1DB0005780F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
