@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using TenderingExpert.Annotations;
 using WordOperator;
@@ -190,6 +189,120 @@ namespace TenderingExpert.Data
             TenderingDate = reader.FindKeyValue("开标时间：");
         }
 
+        public List<PackageInformation> LoadPackageInfo(WordReader tenderReader)
+        {
+            var result = new List<PackageInformation>();
+
+            var packageContext = tenderReader.GetTableContent(1);
+
+            int nameIndex = 0;
+            int numIndex = 0;
+            int budgetIndex = 0;
+            int descripIndex = 0;
+            int remarksIndex = 0;
+
+            for (int i = 0; i < packageContext.Count; i++)
+            {
+                var row = packageContext[i];
+                if (i == 0)
+                {
+                    for (int j = 0; j < row.Count; j++)
+                    {
+                        var context = row[j];
+
+                        if (context.Contains("设备名称"))
+                            nameIndex = j;
+
+                        if (context.Contains("数量"))
+                            numIndex = j;
+
+                        if (context.Contains("预算"))
+                            budgetIndex = j;
+
+                        if (context.Contains("描述"))
+                            descripIndex = j;
+
+                        if (context.Contains("备注"))
+                            remarksIndex = j;
+                    }
+                }
+                else
+                {
+                    var info = new PackageInformation
+                    {
+                        DeviceName = row[nameIndex].Replace("\r\a", ""),
+                        Quantity = row[numIndex].Replace("\r\a", ""),
+                        Budget = row[budgetIndex].Replace("\r\a", ""),
+                        Description = row[descripIndex].Replace("\r\a", ""),
+                        Remarks = row[remarksIndex].Replace("\r\a", "")
+                    };
+
+                    result.Add(info);
+                }
+            }
+
+            return result;
+        }
+
+        public List<PurchaseInformation> LoadPurchaseInfo(WordReader purchaseReader, int index)
+        {
+            var result = new List<PurchaseInformation>();
+
+            var purchaseContext = purchaseReader.GetTableContent(index);
+
+            int companyIndex = 0;
+            int contactsIndex = 0;
+            int mobileIndex = 0;
+            int phoneIndex = 0;
+            int faxIndex = 0;
+            int mailIndex = 0;
+
+            for (int i = 0; i < purchaseContext.Count; i++)
+            {
+                var row = purchaseContext[i];
+                if (i == 0)
+                {
+                    for (int j = 0; j < row.Count; j++)
+                    {
+                        var context = row[j];
+
+                        if (context.Contains("单位"))
+                            companyIndex = j;
+
+                        if (context.Contains("联系人"))
+                            contactsIndex = j;
+
+                        if (context.Contains("手机"))
+                            mobileIndex = j;
+
+                        if (context.Contains("电话"))
+                            phoneIndex = j;
+
+                        if (context.Contains("传真"))
+                            faxIndex = j;
+
+                        if (context.Contains("邮箱"))
+                            mailIndex = j;
+                    }
+                }
+                else
+                {
+                    var info = new PurchaseInformation
+                    {
+                        CompanyName = row[companyIndex].Replace("\r\a", ""),
+                        Contacts = row[contactsIndex].Replace("\r\a", ""),
+                        MobilePhone = row[mobileIndex].Replace("\r\a", ""),
+                        Phone = row[phoneIndex].Replace("\r\a", ""),
+                        Fax = row[faxIndex].Replace("\r\a", ""),
+                        Mail = row[mailIndex].Replace("\r\a", ""),
+                    };
+
+                    result.Add(info);
+                }
+            }
+
+            return result;
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

@@ -5,88 +5,65 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TenderingExpert"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Closed="Window_Closed">
+        Title="MainWindow" Height="600" Width="1000" Closed="Window_Closed">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="6*"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="4*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="10*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBox x:Name="WordPath" Margin="5" TextWrapping="Wrap" Text="选择word文件路径" VerticalContentAlignment="Center"/>
-        <Button x:Name="SelectFile" Content="浏览" Grid.Row="0" Grid.Column="1" Margin="5" Click="SelectFile_OnClick"/>
-        <Button x:Name="StartRead" Content="读取" Grid.Row="0" Grid.Column="2" Margin="5" Click="StartRead_OnClick"/>
-        <ScrollViewer Margin="10" Grid.Row="1" Grid.ColumnSpan="3" Grid.Column="0">
-            <Grid Margin="5" Name="InformationGrid">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="5*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <TextBlock Margin="2" TextWrapping="Wrap" Text="项目名称：" VerticalAlignment="Center"/>
-                <TextBlock Margin="2" TextWrapping="Wrap" Text="项目编号：" VerticalAlignment="Center" Grid.Row="1"
-                           Grid.Column="0" />
-                <TextBlock Margin="2" TextWrapping="Wrap" Text="项目联系人：" VerticalAlignment="Center" Grid.Row="2"
-                           Grid.Column="0" />
-                <TextBlock Margin="2" TextWrapping="Wrap" Text="项目联系电话：" VerticalAlignment="Center" Grid.Row="3"
-                           Grid.Column="0" />
-                <TextBlock Margin="2" TextWrapping="Wrap" Text="采购人：" VerticalAlignment="Center" Grid.Row="4"
-                           Grid.Column="0" />
-                <TextBlock Margin="2" TextWrapping="Wrap" Text="地址：" VerticalAlignment="Center" Grid.Row="5"
-                           Grid.Column="0" />
-                <TextBlock Margin="2" TextWrapping="Wrap" Text="电话/传真：" VerticalAlignment="Center" Grid.Row="6"
-                           Grid.Column="0" />
-                <TextBlock Margin="2" TextWrapping="Wrap" Text="代理机构：" VerticalAlignment="Center" Grid.Row="7"
-                           Grid.Column="0" />
-                <TextBlock Margin="2" TextWrapping="Wrap" Text="代理机构联系人：" VerticalAlignment="Center" Grid.Row="8"
-                           Grid.Column="0" />
-                <TextBlock Margin="2" TextWrapping="Wrap" Text="电话：" VerticalAlignment="Center" Grid.Row="9"
-                           Grid.Column="0" />
-                <TextBlock Margin="2" TextWrapping="Wrap" Text="电子邮箱：" VerticalAlignment="Center" Grid.Row="10"
-                           Grid.Column="0" />
-                <TextBlock Margin="2" TextWrapping="Wrap" Text="代理机构地址：" VerticalAlignment="Center" Grid.Row="11"
-                           Grid.Column="0" />
-                <TextBlock Margin="2" TextWrapping="Wrap" Text="开标地址：" VerticalAlignment="Center" Grid.Row="12"
-                           Grid.Column="0" />
-                <TextBlock Margin="2" TextWrapping="Wrap" Text="开标时间：" VerticalAlignment="Center" Grid.Row="13"
-                           Grid.Column="0" />
-
-                <TextBox Grid.Row="0" Grid.Column="1" Margin="2" TextWrapping="Wrap" Text="{Binding ProjectName}" VerticalContentAlignment="Center"/>
-                <TextBox Grid.Row="1" Grid.Column="1" Margin="2" TextWrapping="Wrap" Text="{Binding ProjectCode}" VerticalContentAlignment="Center"/>
-                <TextBox Grid.Row="2" Grid.Column="1" Margin="2" TextWrapping="Wrap" Text="{Binding ProjectContactPerson}" VerticalContentAlignment="Center"/>
-                <TextBox Grid.Row="3" Grid.Column="1" Margin="2" TextWrapping="Wrap" Text="{Binding ProjectContactPhoneNumber}" VerticalContentAlignment="Center"/>
-                <TextBox Grid.Row="4" Grid.Column="1" Margin="2" TextWrapping="Wrap" Text="{Binding Purchaser}" VerticalContentAlignment="Center"/>
-                <TextBox Grid.Row="5" Grid.Column="1" Margin="2" TextWrapping="Wrap" Text="{Binding PurchaserAddress}" VerticalContentAlignment="Center"/>
-                <TextBox Grid.Row="6" Grid.Column="1" Margin="2" TextWrapping="Wrap" Text="{Binding PurchaserContact}" VerticalContentAlignment="Center"/>
-                <TextBox Grid.Row="7" Grid.Column="1" Margin="2" TextWrapping="Wrap" Text="{Binding Agency}" VerticalContentAlignment="Center"/>
-                <TextBox Grid.Row="8" Grid.Column="1" Margin="2" TextWrapping="Wrap" Text="{Binding AgencyContactPerson}" VerticalContentAlignment="Center"/>
-                <TextBox Grid.Row="9" Grid.Column="1" Margin="2" TextWrapping="Wrap" Text="{Binding AgencyContactPhoneNumber}" VerticalContentAlignment="Center"/>
-                <TextBox Grid.Row="10" Grid.Column="1" Margin="2" TextWrapping="Wrap" Text="{Binding AgencyEmail}" VerticalContentAlignment="Center"/>
-                <TextBox Grid.Row="11" Grid.Column="1" Margin="2" TextWrapping="Wrap" Text="{Binding AgencyAddress}" VerticalContentAlignment="Center"/>
-                <TextBox Grid.Row="12" Grid.Column="1" Margin="2" TextWrapping="Wrap" Text="{Binding TenderingAddress}" VerticalContentAlignment="Center"/>
-                <TextBox Grid.Row="13" Grid.Column="1" Margin="2" TextWrapping="Wrap" Text="{Binding TenderingDate}" VerticalContentAlignment="Center"/>
-
-            </Grid>
-        </ScrollViewer>
-
+        <TextBlock Grid.Row="0" Grid.Column="0" Margin="5" Text="招标文件：" VerticalAlignment="Center"/>
+        <TextBox x:Name="TenderDoc" Margin="10,5,5,5" Text="选择word文件路径" VerticalContentAlignment="Center"
+                 Grid.Row="0" Grid.Column="1"/>
+        <Button x:Name="SelectTenderFile" Content="浏览" Grid.Row="0" Grid.Column="2" Margin="5" Click="SelectTenderFile_OnClick"/>
+        <Button x:Name="StartRead" Content="读取" Grid.Row="2" Grid.Column="2" Margin="5" Click="StartRead_OnClick"/>
+        <TextBlock Margin="5" Grid.Row="1" Grid.Column="0" Text="购买名单：" VerticalAlignment="Center"/>
+        <TextBox x:Name="PurchaseDoc" Margin="10,5,5,5" Text="选择word文件路径" VerticalContentAlignment="Center"
+            Grid.Row="1" Grid.Column="1"/>
+        <Button x:Name="SelectPurchaseFile" Content="浏览" Grid.Row="1" Grid.Column="2" Margin="5" Click="SelectPurchaseFile_OnClick"/>
+        <TextBlock Margin="5" Grid.Row="2" Grid.Column="0" Text="读取结果：" VerticalAlignment="Center"/>
+        <TextBlock Margin="5" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center"><Run Text="项目名称："/></TextBlock>
+        <TextBox x:Name="ProjectName" Grid.Column="1" Margin="10,5,5,5" Grid.Row="3" Text="{Binding ProjectName}"/>
+        <TextBlock Text="项目编号：" VerticalAlignment="Center" Margin="5" Grid.Row="4" Grid.Column="0" />
+        <TextBox x:Name="ProjectCode" Grid.Column="1" Margin="10,5,5,5" Grid.Row="4" Text="{Binding ProjectCode}"/>
+        <TextBlock Text="开标地点：" VerticalAlignment="Center" Margin="5" Grid.Row="5" Grid.Column="0" />
+        <TextBox x:Name="TenderingAddress" Grid.Column="1" Margin="10,6,5,4" Grid.Row="5" Text="{Binding TenderingAddress}"/>
+        <TextBlock Text="开标时间：" VerticalAlignment="Center" Margin="5" Grid.Row="6" Grid.Column="0" />
+        <TextBox x:Name="TenderingDate" Grid.Column="1" Margin="10,6,5,4" Grid.Row="6" Text="{Binding TenderingDate}"/>
+        <DataGrid x:Name="PackageList" Grid.Column="1" Margin="10,5,5,10" Grid.Row="7" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" CanUserAddRows="False" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="设备名称" Binding="{Binding DeviceName}"></DataGridTextColumn>
+                <DataGridTextColumn Header="数量" Binding="{Binding Quantity}"></DataGridTextColumn>
+                <DataGridTextColumn Header="采购预算" Binding="{Binding Budget}"></DataGridTextColumn>
+                <DataGridTextColumn Header="简要规格描述" Binding="{Binding Description}"></DataGridTextColumn>
+                <DataGridTextColumn Header="备注" Binding="{Binding Remarks}"></DataGridTextColumn>
+                <DataGridTemplateColumn Header="购买名单">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ListBox ItemsSource="{Binding PurchaseInformations}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding CompanyName}"></TextBlock>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <TextBlock Text="包信息：" VerticalAlignment="Top" Margin="5" Grid.Row="7" Grid.Column="0" ScrollViewer.CanContentScroll="True" />
     </Grid>
 </Window>
