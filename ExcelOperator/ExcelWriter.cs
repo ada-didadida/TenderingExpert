@@ -11,14 +11,14 @@ namespace ExcelOperator
     }
     public class ExcelWriter
     {
-        private readonly Application excelApplication;
+        private Application excelApplication;
         private Workbooks excelWorkbooks;
         private Workbook excelWorkbook;
 
         public ExcelWriter()
         {
             excelApplication = new Application();
-            excelWorkbooks = excelApplication.Workbooks;
+            excelWorkbooks = excelApplication.Workbooks;            
         }
 
         public void Create()
@@ -28,13 +28,20 @@ namespace ExcelOperator
 
         public void AddSheets(params string[] sheetNames)
         {
-            for (int i = sheetNames.Length - 1; i >= 0; i--)
+            foreach (var name in sheetNames)
             {
                 Worksheet sheet = excelWorkbook.Worksheets.Add();
-                sheet.Name = sheetNames[i];
-
+                sheet.Name = name;
             }
-            excelWorkbook.Worksheets["sheet1"].Delete();
+
+            foreach (Worksheet sheet in excelWorkbook.Worksheets)
+            {
+                if (sheet.Name == "sheet1" || sheet.Name == "Sheet1")
+                {
+                    sheet.Delete();
+                    break;
+                }
+            }
         }
 
         private void UnitCells(Worksheet worksheet, int x1, int y1, int x2, int y2)
@@ -98,15 +105,16 @@ namespace ExcelOperator
         {
             try
             {
-                excelWorkbook.SaveAs(fileName, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing,
+                excelApplication.AlertBeforeOverwriting = false;
+                excelWorkbook.SaveAs(fileName, XlFileFormat.xlWorkbookNormal, Type.Missing, Type.Missing, Type.Missing, Type.Missing,
                     XlSaveAsAccessMode.xlExclusive, Type.Missing, Type.Missing, Type.Missing, Type.Missing,
                     Type.Missing);
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception exception)
             {
-                return false;
+                throw new Exception("保存失败!",exception);
             }
         }
 
@@ -118,8 +126,12 @@ namespace ExcelOperator
             excelWorkbooks?.Close();
             excelApplication.Quit();
 
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(excelApplication);
             excelWorkbook = null;
             excelWorkbooks = null;
+            excelApplication = null;
+
+            GC.Collect();
         }
     }
 }

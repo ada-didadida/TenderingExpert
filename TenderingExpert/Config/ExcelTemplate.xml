@@ -1,25 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Excel>
-    <SheetInformation>
-        <Name>test</Name>
-        <MergeCellsPosition>
-            <Pairs>
-                <Left X="1" Y="1"></Left>
-                <Right X="1" Y="6"></Right>
-            </Pairs>
-            <Pairs>
-                <Left X="1" Y="1"></Left>
-                <Right X="1" Y="6"></Right>
-            </Pairs>
-        </MergeCellsPosition>
-        <BorderArea>
-            <Pairs>
-                <Left X="1" Y="1"></Left>
-                <Right X="1" Y="6"></Right>
-            </Pairs>
-        </BorderArea>
-        <Information>
-            <Cell X="1" Y="1" Value="test" FontName="宋体" FontSize="10" FontAlignment="0" Bold="1"></Cell>
-        </Information>
+    <SheetInformation Name="表1-开标">
+        <Title>表1.开标一览表</Title>
+        <FormInformation>
+            <Header>
+                <Content>编号</Content>
+                <Content>投标人</Content>
+                <Content>开标价（人民币）</Content>
+                <Content>投标保证金</Content>
+                <Content>开标声明</Content>
+                <Content>投标人代表签字</Content>
+            </Header>
+        </FormInformation>
+        <End>
+            <Content>拆标人：               唱标人：               录入人：</Content>
+        </End>
+    </SheetInformation>
+    <SheetInformation Name="表2-资格审查表">
+        <Title>表2.资格审查表</Title>
+        <InitialMergeCellsRowCount>2</InitialMergeCellsRowCount>
+        <FormInformation>
+            <Header>
+                <Content>序号</Content>
+                <Content>内容</Content>
+            </Header>
+            <Content>
+                <Value>合格的投标函</Value>
+                <Value>合格的投标单位法定代表人授权书</Value>
+                <Value>合格的招标代理服务费承诺函</Value>
+                <Value>参加本次采购活动前三年内在经营活动中没有重大违法记录的声明</Value>
+                <Value>具有独立承担民事责任能力的证明文件</Value>
+                <Value>依法缴纳税收和社会保障资金记录</Value>
+                <Value>审计报告或银行资信证明</Value>
+                <Value>“信用中国”网站查询结果</Value>
+                <Value>廉洁承诺书</Value>
+                <Value>进口产品制造商授权书</Value>
+                <Value>投标人生产或经营医疗器械所需的证明材料（若适用）</Value>
+                <Value>投标人不是联合体</Value>
+                <Value>按招标文件要求签字和盖章</Value>
+                <Value>投标保证金</Value>
+            </Content>
+        </FormInformation>
+        <End>
+            <Content>注解1：“√” 代表合格。</Content>
+            <Content>采购代理机构项目负责人签字：</Content>
+            <Date></Date>
+        </End>
+    </SheetInformation>
+    <SheetInformation Name="表3- 符合性审查">
+        <Title>表3.符合性审查表</Title>
+        <Width>9</Width>
+        <InitialMergeCellsRowCount>2</InitialMergeCellsRowCount>
+        <FormInformation>
+            <Header>
+                <Content>投标人\内容</Content>
+                <Content>报价</Content>
+                <Content>医疗器械注册或备案证明（若适用）</Content>
+                <Content>交货期/交货地点</Content>
+                <Content>投标文件的完整性</Content>
+                <Content>无选择性报价或选择方案</Content>
+                <Content>商务条款偏离表</Content>
+                <Content>其他要求</Content>
+                <Content>结论</Content>
+            </Header>
+        </FormInformation>
+        <End>
+            <Content>评委会签字：</Content>
+            <Date></Date>
+        </End>
+    </SheetInformation>
+    <SheetInformation Name="表5-评分汇总">
+        <Title>表5.评分汇总表</Title>
+        <InitialMergeCellsRowCount>2</InitialMergeCellsRowCount>
+        <JudgesCount>5</JudgesCount>
+        <FormInformation>
+            <Header>
+                <Content>序号</Content>
+                <Content>评委/投标人</Content>
+            </Header>
+        </FormInformation>
+        <End>
+            <Content>评委会签字：</Content>
+            <Date></Date>
+        </End>
+    </SheetInformation>
+    <SheetInformation Name="表6-排序表">
+        <Title>表6.供应商排序表</Title>
+        <InitialMergeCellsRowCount>2</InitialMergeCellsRowCount>
+        <JudgesCount>5</JudgesCount>
+        <FormInformation>
+            <Header>
+                <Content>投标人/评委</Content>
+            </Header>
+        </FormInformation>
+        <End>
+            <Content>评委会签字：</Content>
+            <Date></Date>
+        </End>
+    </SheetInformation>
+    <SheetInformation Name="表7-授标">
+        <Title>表7.授标建议表</Title>
+        <InitialMergeCellsRowCount>2</InitialMergeCellsRowCount>
+        <FormInformation>
+            <Header>
+                <Content>中标人名称</Content>
+                <Content>中标人地址</Content>
+                <Content>设备/数量/型号/单价</Content>
+                <Content>制造商/产地</Content>
+                <Content>投标价格</Content>
+            </Header>
+        </FormInformation>
+        <End>
+            <Content>评委会签字：</Content>
+            <Date></Date>
+        </End>
     </SheetInformation>
 </Excel>

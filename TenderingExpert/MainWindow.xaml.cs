@@ -1,9 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Windows;
+using System.Windows.Forms;
 using ExcelOperator;
-using Microsoft.Win32;
 using TenderingExpert.Data;
 using WordOperator;
+using MessageBox = System.Windows.MessageBox;
+using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 
 namespace TenderingExpert
 {
@@ -20,15 +24,11 @@ namespace TenderingExpert
 
         public TenderingInformation TenderInformation { get; set; } = new TenderingInformation();
 
-        public TenderForm TenderExcelForm { get; set; } = new TenderForm();
-
         public List<PackageInformation> PackageInformations { get; set; }
 
         private WordReader tenderWordReader;
 
-        private WordReader purchaseWordReader;
-
-        private ExcelWriter excelWriter;
+        private WordReader purchaseWordReader;        
 
         private void SelectTenderFile_OnClick(object sender, RoutedEventArgs e)
         {
@@ -44,26 +44,50 @@ namespace TenderingExpert
 
         private void StartRead_OnClick(object sender, RoutedEventArgs e)
         {
+            if (string.IsNullOrEmpty(TenderDoc.Text) || string.IsNullOrEmpty(PurchaseDoc.Text))
+            {
+                ShowInfoMessage("请选择Word文件");
+                return;
+            }
+
             var tenderDocText = TenderDoc.Text;
             if (!string.IsNullOrEmpty(tenderDocText))
             {
-                tenderWordReader = new WordReader(tenderDocText);
-                tenderWordReader.StartRead();
+                try
+                {
+                    tenderWordReader = new WordReader(tenderDocText);
+                    tenderWordReader.StartRead();
 
-                TenderInformation.LoadInfo(tenderWordReader);
-                PackageInformations = TenderInformation.LoadPackageInfo(tenderWordReader);
+                    TenderInformation.LoadInfo(tenderWordReader);
+                    PackageInformations = TenderInformation.LoadPackageInfo(tenderWordReader);
+
+                    tenderWordReader.Close();
+                }
+                catch (Exception exception)
+                {
+                    ShowErrorMessage(exception.Message);
+                }
             }
 
             var purchaseDocText = PurchaseDoc.Text;
             if (!string.IsNullOrEmpty(purchaseDocText))
             {
-                purchaseWordReader = new WordReader(purchaseDocText);
-                purchaseWordReader.StartRead();
-
-                for (int i = 0; i < PackageInformations.Count; i++)
+                try
                 {
-                    PackageInformations[i].PurchaseInformations =
-                        TenderInformation.LoadPurchaseInfo(purchaseWordReader, i + 1);
+                    purchaseWordReader = new WordReader(purchaseDocText);
+                    purchaseWordReader.StartRead();
+
+                    for (int i = 0; i < PackageInformations.Count; i++)
+                    {
+                        PackageInformations[i].PurchaseInformations =
+                            TenderInformation.LoadPurchaseInfo(purchaseWordReader, i + 1);
+                    }
+
+                    purchaseWordReader.Close();
+                }
+                catch (Exception exception)
+                {
+                    ShowErrorMessage(exception.Message);
                 }
             }
 
@@ -74,7 +98,9 @@ namespace TenderingExpert
         {
             tenderWordReader?.Close();
             purchaseWordReader?.Close();
-            excelWriter?.Close();
+
+            tenderWordReader = null;
+            purchaseWordReader = null;
         }
 
         private void SelectPurchaseFile_OnClick(object sender, RoutedEventArgs e)
@@ -91,17 +117,51 @@ namespace TenderingExpert
 
         private void CreateExcel_OnClick(object sender, RoutedEventArgs e)
         {
-            excelWriter = new ExcelWriter();
-            excelWriter.Create();
-            
-            TenderExcelForm.TenderInfo = TenderInformation;
-            TenderExcelForm.PackageInfo = PackageInformations[0];
-            
-            TenderExcelForm.Init();
-            TenderExcelForm.FillContent(excelWriter);
-            
-            excelWriter.SaveAs("D:\\评标表.xls");
-            excelWriter.Close();
+            if (string.IsNullOrEmpty(ExcelPath.Text))
+            {
+                ShowInfoMessage("请选择Excel生成路径");
+                return;
+            }
+
+            foreach (PackageInformation information in PackageInformations)
+            {
+                try
+                {
+                    var excelWriter = new ExcelWriter();
+                    excelWriter.Create();
+
+                    var tenderExcelForm = new TenderForm {TenderInfo = TenderInformation, PackageInfo = information};
+
+                    tenderExcelForm.Init();
+                    tenderExcelForm.FillContent(excelWriter);
+
+                    var path = Path.Combine(ExcelPath.Text, information.DeviceName);
+                    excelWriter.SaveAs(path);
+                    excelWriter.Close();
+                }
+                catch (Exception exception)
+                {
+                    ShowErrorMessage(exception.Message);
+                }
+            }
+        }
+
+        private void SelectExcelPath_OnClick(object sender, RoutedEventArgs e)
+        {
+            var openFileDialog = new FolderBrowserDialog();
+
+            if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                ExcelPath.Text = openFileDialog.SelectedPath;
+        }
+
+        private void ShowInfoMessage(string msg)
+        {
+            MessageBox.Show(msg, "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void ShowErrorMessage(string msg)
+        {
+            MessageBox.Show(msg, "错误", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 }

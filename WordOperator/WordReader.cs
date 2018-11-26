@@ -9,7 +9,7 @@ namespace WordOperator
     {
         private readonly string wordPath;
 
-        private readonly Application wordApplication;
+        private Application wordApplication;
 
         private Document wordDocument;
 
@@ -120,6 +120,12 @@ namespace WordOperator
 
             wordDocument?.Close(ref unknown, ref unknown, ref unknown);
             wordApplication.Quit(ref unknown, ref unknown, ref unknown);
+
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(wordApplication);
+            wordDocument = null;
+            wordApplication = null;
+
+            GC.Collect();
         }
     }
 }
