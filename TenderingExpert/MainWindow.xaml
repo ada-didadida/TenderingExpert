@@ -25,14 +25,54 @@
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0" Grid.Column="0" Margin="5" Text="招标文件：" VerticalAlignment="Center"/>
-        <TextBox x:Name="TenderDoc" Margin="10,5,5,5" Text="选择word文件路径" VerticalContentAlignment="Center"
-                 Grid.Row="0" Grid.Column="1"/>
+        <TextBox x:Name="TenderDoc" Margin="10,5,5,5" VerticalContentAlignment="Center"
+                 Grid.Row="0" Grid.Column="1">
+            <TextBox.Resources>
+                <VisualBrush x:Key="HintText" TileMode="None" Opacity="0.5" Stretch="None" AlignmentX="Left">
+                    <VisualBrush.Visual>
+                        <TextBlock FontStyle="Italic" Text="选择招标文件路径"/>
+                    </VisualBrush.Visual>
+                </VisualBrush>
+            </TextBox.Resources>
+            <TextBox.Style>
+                <Style TargetType="TextBox">
+                    <Style.Triggers>
+                        <Trigger Property="Text" Value="{x:Null}">
+                            <Setter Property="Background" Value="{StaticResource HintText}"/>
+                        </Trigger>
+                        <Trigger Property="Text" Value="">
+                            <Setter Property="Background" Value="{StaticResource HintText}"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
         <Button x:Name="SelectTenderFile" Content="浏览" Grid.Row="0" Grid.Column="2" Margin="5" Click="SelectTenderFile_OnClick"/>
         <Button x:Name="StartRead" Content="读取" Grid.Row="2" Grid.Column="2" Margin="5" Click="StartRead_OnClick"/>
         <TextBlock Margin="5" Grid.Row="1" Grid.Column="0" Text="购买名单：" VerticalAlignment="Center"/>
-        <TextBox x:Name="PurchaseDoc" Margin="10,5,5,5" Text="选择word文件路径" VerticalContentAlignment="Center"
-            Grid.Row="1" Grid.Column="1"/>
-        <Button x:Name="SelectPurchaseFile" Content="浏览" Grid.Row="1" Grid.Column="2" Margin="5" Click="SelectPurchaseFile_OnClick"/>
+        <TextBox x:Name="PurchaseDoc" Margin="10,5,5,5" VerticalContentAlignment="Center"
+            Grid.Row="1" Grid.Column="1">
+            <TextBox.Resources>
+                <VisualBrush x:Key="HintText" TileMode="None" Opacity="0.5" Stretch="None" AlignmentX="Left">
+                    <VisualBrush.Visual>
+                        <TextBlock FontStyle="Italic" Text="选择购买名单路径"/>
+                    </VisualBrush.Visual>
+                </VisualBrush>
+            </TextBox.Resources>
+            <TextBox.Style>
+                <Style TargetType="TextBox">
+                    <Style.Triggers>
+                        <Trigger Property="Text" Value="{x:Null}">
+                            <Setter Property="Background" Value="{StaticResource HintText}"/>
+                        </Trigger>
+                        <Trigger Property="Text" Value="">
+                            <Setter Property="Background" Value="{StaticResource HintText}"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
+            <Button x:Name="SelectPurchaseFile" Content="浏览" Grid.Row="1" Grid.Column="2" Margin="5" Click="SelectPurchaseFile_OnClick"/>
         <TextBlock Margin="5" Grid.Row="2" Grid.Column="0" Text="读取结果：" VerticalAlignment="Center"/>
         <TextBlock Margin="5" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center"><Run Text="项目名称："/></TextBlock>
         <TextBox x:Name="ProjectName" Grid.Column="1" Margin="10,5,5,5" Grid.Row="3" Text="{Binding ProjectName}"/>
@@ -67,8 +107,28 @@
         <TextBlock Text="包信息：" VerticalAlignment="Top" Margin="5" Grid.Row="7" Grid.Column="0" />
         <Button x:Name="CreateExcel" Content="创建" Grid.Row="8" Grid.Column="2" Margin="5" Click="CreateExcel_OnClick"/>
         <TextBlock Text="生成路径：" VerticalAlignment="Top" Margin="5" Grid.Row="8" Grid.Column="0" />
-        <TextBox x:Name="ExcelPath" Margin="10,5,200,5" Text="选择Excel文件路径" VerticalContentAlignment="Center"
-            Grid.Row="8" Grid.Column="1"/>
-        <Button x:Name="SelectExcelPath" Content="浏览" Grid.Column="1" Margin="500,5,5,5" Grid.Row="8" Width="155" HorizontalAlignment="Right" Click="SelectExcelPath_OnClick"/>
+        <TextBox x:Name="ExcelPath" Margin="10,5,200,5" VerticalContentAlignment="Center"
+            Grid.Row="8" Grid.Column="1">
+            <TextBox.Resources>
+                <VisualBrush x:Key="HintText" TileMode="None" Opacity="0.5" Stretch="None" AlignmentX="Left">
+                    <VisualBrush.Visual>
+                        <TextBlock FontStyle="Italic" Text="选择Excel生成路径"/>
+                    </VisualBrush.Visual>
+                </VisualBrush>
+            </TextBox.Resources>
+            <TextBox.Style>
+                <Style TargetType="TextBox">
+                    <Style.Triggers>
+                        <Trigger Property="Text" Value="{x:Null}">
+                            <Setter Property="Background" Value="{StaticResource HintText}"/>
+                        </Trigger>
+                        <Trigger Property="Text" Value="">
+                            <Setter Property="Background" Value="{StaticResource HintText}"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
+            <Button x:Name="SelectExcelPath" Content="浏览" Grid.Column="1" Margin="500,5,5,5" Grid.Row="8" Width="100" HorizontalAlignment="Right" Click="SelectExcelPath_OnClick"/>
     </Grid>
 </Window>

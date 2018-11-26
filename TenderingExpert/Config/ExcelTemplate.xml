@@ -18,7 +18,6 @@
     </SheetInformation>
     <SheetInformation Name="表2-资格审查表">
         <Title>表2.资格审查表</Title>
-        <InitialMergeCellsRowCount>2</InitialMergeCellsRowCount>
         <FormInformation>
             <Header>
                 <Content>序号</Content>
@@ -49,8 +48,6 @@
     </SheetInformation>
     <SheetInformation Name="表3- 符合性审查">
         <Title>表3.符合性审查表</Title>
-        <Width>9</Width>
-        <InitialMergeCellsRowCount>2</InitialMergeCellsRowCount>
         <FormInformation>
             <Header>
                 <Content>投标人\内容</Content>
@@ -71,7 +68,6 @@
     </SheetInformation>
     <SheetInformation Name="表5-评分汇总">
         <Title>表5.评分汇总表</Title>
-        <InitialMergeCellsRowCount>2</InitialMergeCellsRowCount>
         <JudgesCount>5</JudgesCount>
         <FormInformation>
             <Header>
@@ -85,8 +81,7 @@
         </End>
     </SheetInformation>
     <SheetInformation Name="表6-排序表">
-        <Title>表6.供应商排序表</Title>
-        <InitialMergeCellsRowCount>2</InitialMergeCellsRowCount>
+        <Title>表6.供应商排序表</Title>        
         <JudgesCount>5</JudgesCount>
         <FormInformation>
             <Header>
@@ -100,7 +95,6 @@
     </SheetInformation>
     <SheetInformation Name="表7-授标">
         <Title>表7.授标建议表</Title>
-        <InitialMergeCellsRowCount>2</InitialMergeCellsRowCount>
         <FormInformation>
             <Header>
                 <Content>中标人名称</Content>

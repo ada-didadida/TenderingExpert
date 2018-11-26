@@ -28,10 +28,10 @@ namespace ExcelOperator
 
         public void AddSheets(params string[] sheetNames)
         {
-            foreach (var name in sheetNames)
+            for (int i = sheetNames.Length - 1; i >= 0; i--)
             {
                 Worksheet sheet = excelWorkbook.Worksheets.Add();
-                sheet.Name = name;
+                sheet.Name = sheetNames[i];
             }
 
             foreach (Worksheet sheet in excelWorkbook.Worksheets)

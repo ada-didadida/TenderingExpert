@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Forms;
@@ -28,7 +29,13 @@ namespace TenderingExpert
 
         private WordReader tenderWordReader;
 
-        private WordReader purchaseWordReader;        
+        private WordReader purchaseWordReader;
+
+        private string tenderDocText;
+
+        private string purchaseDocText;
+
+        private string excelPath;
 
         private void SelectTenderFile_OnClick(object sender, RoutedEventArgs e)
         {
@@ -50,7 +57,26 @@ namespace TenderingExpert
                 return;
             }
 
-            var tenderDocText = TenderDoc.Text;
+            StartRead.IsEnabled = false;
+            StartRead.Content = "正在加载";
+
+            tenderDocText = TenderDoc.Text;
+            purchaseDocText = PurchaseDoc.Text;
+
+            StartBackgroundWork(LoadWordInfo,null,LoadRunComplete);
+        }
+
+        private void StartBackgroundWork(DoWorkEventHandler doWork, ProgressChangedEventHandler progressChanged, RunWorkerCompletedEventHandler completed)
+        {
+            var work = new BackgroundWorker {WorkerReportsProgress = true};
+            work.DoWork += doWork;
+            work.ProgressChanged += progressChanged;
+            work.RunWorkerCompleted += completed;
+            work.RunWorkerAsync();
+        }
+
+        private void LoadWordInfo(object sender, DoWorkEventArgs e)
+        {
             if (!string.IsNullOrEmpty(tenderDocText))
             {
                 try
@@ -65,11 +91,10 @@ namespace TenderingExpert
                 }
                 catch (Exception exception)
                 {
-                    ShowErrorMessage(exception.Message);
+                    Dispatcher.Invoke(() => { ShowErrorMessage(exception.Message); });
                 }
             }
 
-            var purchaseDocText = PurchaseDoc.Text;
             if (!string.IsNullOrEmpty(purchaseDocText))
             {
                 try
@@ -87,11 +112,57 @@ namespace TenderingExpert
                 }
                 catch (Exception exception)
                 {
+                    Dispatcher.Invoke(() => { ShowErrorMessage(exception.Message); });
+                }
+            }
+        }
+
+        private void CreateExcels(object sender, DoWorkEventArgs e)
+        {
+            foreach (PackageInformation information in PackageInformations)
+            {
+                try
+                {
+                    var excelWriter = new ExcelWriter();
+                    excelWriter.Create();
+
+                    var tenderExcelForm = new TenderForm { TenderInfo = TenderInformation, PackageInfo = information };
+
+                    tenderExcelForm.Init(PackageInformations.Count == 1);
+                    tenderExcelForm.FillContent(excelWriter);
+
+                    var path = Path.Combine(excelPath, information.DeviceName);
+                    path = path.Replace("/", "");
+                    excelWriter.SaveAs(path);
+                    excelWriter.Close();
+                }
+                catch (Exception exception)
+                {
                     ShowErrorMessage(exception.Message);
                 }
             }
+        }
 
-            PackageList.ItemsSource = PackageInformations;
+        private void LoadRunComplete(object sender, RunWorkerCompletedEventArgs e)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                PackageList.ItemsSource = PackageInformations;
+                ShowInfoMessage("加载完成");
+                StartRead.IsEnabled = true;
+                StartRead.Content = "读取";
+
+            });
+        }
+
+        private void CreateRunComplete(object sender, RunWorkerCompletedEventArgs e)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                ShowInfoMessage("创建完成");
+                CreateExcel.IsEnabled = true;
+                CreateExcel.Content = "创建";
+            });
         }
 
         private void Window_Closed(object sender, System.EventArgs e)
@@ -123,28 +194,12 @@ namespace TenderingExpert
                 return;
             }
 
-            foreach (PackageInformation information in PackageInformations)
-            {
-                try
-                {
-                    var excelWriter = new ExcelWriter();
-                    excelWriter.Create();
+            CreateExcel.IsEnabled = false;
+            CreateExcel.Content = "正在创建";
 
-                    var tenderExcelForm = new TenderForm {TenderInfo = TenderInformation, PackageInfo = information};
+            excelPath = ExcelPath.Text;
 
-                    tenderExcelForm.Init();
-                    tenderExcelForm.FillContent(excelWriter);
-
-                    var path = Path.Combine(ExcelPath.Text, information.DeviceName);
-                    path = path.Replace("/", "");
-                    excelWriter.SaveAs(path);
-                    excelWriter.Close();
-                }
-                catch (Exception exception)
-                {
-                    ShowErrorMessage(exception.Message);
-                }
-            }
+            StartBackgroundWork(CreateExcels, null, CreateRunComplete);
         }
 
         private void SelectExcelPath_OnClick(object sender, RoutedEventArgs e)

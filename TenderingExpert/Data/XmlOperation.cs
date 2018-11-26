@@ -10,9 +10,16 @@ namespace TenderingExpert.Data
     {
         private XmlDocument xmlDocument;
 
+        private bool isOnePackage;
+
         public XmlOperation()
         {
             xmlDocument = new XmlDocument();
+        }
+
+        public void SetPackageFlag(bool onePackage)
+        {
+            isOnePackage = onePackage;
         }
 
         public List<SheetInformation> LoadConfig(int purchaseCount, string date)
@@ -88,6 +95,10 @@ namespace TenderingExpert.Data
 
                 //空一行开始表格
                 int formStartRow = mergeRowCount + 2;
+                if (isOnePackage)
+                {
+                    formStartRow = mergeRowCount + 1;
+                }
                 //表头
                 var formHeader = sheet.GetElementsByTagName("Header")[0];
                 for (int i = 0; i < formHeader.ChildNodes.Count; i++)
@@ -170,6 +181,8 @@ namespace TenderingExpert.Data
 
                 //空一行开始表格
                 int formStartRow = mergeRowCount + 2;
+                if (isOnePackage)
+                    formStartRow = mergeRowCount + 1;
                 //表头
                 var formHeader = sheet.GetElementsByTagName("Header")[0];
                 for (int i = 0; i < formHeader.ChildNodes.Count; i++)
@@ -266,6 +279,8 @@ namespace TenderingExpert.Data
 
                 //空一行开始表格
                 int formStartRow = mergeRowCount + 2;
+                if (isOnePackage)
+                    formStartRow = mergeRowCount + 1;
                 //表头
                 var formHeader = sheet.GetElementsByTagName("Header")[0];
                 for (int i = 0; i < formHeader.ChildNodes.Count; i++)
@@ -335,9 +350,12 @@ namespace TenderingExpert.Data
                 int mergeRowCount = 2;
                 SetCommonProperty(sheet, info, mergeRowCount, width);
                 //合并
-                info.MergeCellsPosition.Add(new SheetRange(mergeRowCount + 1, 1, mergeRowCount + 1, 3));
+                if (!isOnePackage)
+                    info.MergeCellsPosition.Add(new SheetRange(mergeRowCount + 1, 1, mergeRowCount + 1, 3));
                 //空一行开始表格
                 int formStartRow = mergeRowCount + 2;
+                if (isOnePackage)
+                    formStartRow = mergeRowCount + 1;
                 //表头
                 var formHeader = sheet.GetElementsByTagName("Header")[0];
                 for (int i = 0; i < formHeader.ChildNodes.Count; i++)
@@ -403,6 +421,8 @@ namespace TenderingExpert.Data
                 SetCommonProperty(sheet, info, mergeRowCount, width);
                 //空一行开始表格
                 int formStartRow = mergeRowCount + 2;
+                if (isOnePackage)
+                    formStartRow = mergeRowCount + 1;
                 //表头
                 var formHeader = sheet.GetElementsByTagName("Header")[0];
                 for (int i = 0; i < formHeader.ChildNodes.Count; i++)
@@ -463,6 +483,8 @@ namespace TenderingExpert.Data
 
                 //空一行开始表格
                 int formStartRow = mergeRowCount + 2;
+                if (isOnePackage)
+                    formStartRow = mergeRowCount + 1;
                 //表头
                 var formHeader = sheet.GetElementsByTagName("Header")[0];
                 for (int i = 0; i < formHeader.ChildNodes.Count; i++)
@@ -472,7 +494,8 @@ namespace TenderingExpert.Data
                         new CellProperty(header, 12));
                 }
                 //内容
-                info.Information.Add(new SheetCellPosition(8, 2), new CellProperty("人名币  元", 12));
+                info.Information.Add(new SheetCellPosition(isOnePackage ? 7 : 8, 2),
+                    new CellProperty("人名币  元", 12));
                 //结尾位置
                 int endRow = formStartRow + formHeader.ChildNodes.Count;
 

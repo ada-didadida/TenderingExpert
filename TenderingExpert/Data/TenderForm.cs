@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ExcelOperator;
 
 namespace TenderingExpert.Data
@@ -15,6 +12,8 @@ namespace TenderingExpert.Data
 
         public PackageInformation PackageInfo { get; set; }
 
+        private bool isOnePackage;
+
         public string WriteSpace(int num)
         {
             string res = "";
@@ -24,8 +23,9 @@ namespace TenderingExpert.Data
             return res;
         }
 
-        public void Init()
+        public void Init(bool onePackage)
         {
+            isOnePackage = onePackage;
             InitTemplate();
             InitDataSheet1();
             InitDataSheet2();
@@ -38,6 +38,7 @@ namespace TenderingExpert.Data
         private void InitTemplate()
         {
             XmlOperation xml = new XmlOperation();
+            xml.SetPackageFlag(isOnePackage);
             var date = TenderInfo.TenderingDate.Substring(0, TenderInfo.TenderingDate.IndexOf('日') + 1);
             Sheets = xml.LoadConfig(PackageInfo.PurchaseInformations.Count, date);
         }
@@ -48,27 +49,30 @@ namespace TenderingExpert.Data
             sheet.Information.Add(new SheetCellPosition { X = 2, Y = 1 },
                 new CellProperty
                 {
-                    Value = $"项目名称：{TenderInfo.ProjectName}" + WriteSpace(55) + $"项目编号：{TenderInfo.ProjectCode}"
+                    Value = $"项目名称：{TenderInfo.ProjectName}" + WriteSpace(30) + $"项目编号：{TenderInfo.ProjectCode}"
                 });
 
             sheet.Information.Add(new SheetCellPosition { X = 3, Y = 1 },
                 new CellProperty
                 {
-                    Value = $"开标地点：{TenderInfo.TenderingAddress}" + WriteSpace(55) + $"开标时间：{TenderInfo.TenderingDate}"
-                });
-
-            sheet.Information.Add(new SheetCellPosition { X = 4, Y = 1 },
-                new CellProperty
-                {
-                    Value = PackageInfo.DeviceName
+                    Value = $"开标地点：{TenderInfo.TenderingAddress}" + WriteSpace(30) + $"开标时间：{TenderInfo.TenderingDate}"
                 });
 
             var purchaseCount = PackageInfo.PurchaseInformations.Count;
+            if (!isOnePackage)
+            {
+                sheet.Information.Add(new SheetCellPosition { X = 4, Y = 1 },
+                    new CellProperty
+                    {
+                        Value = PackageInfo.DeviceName
+                    });
+            }
+
             for (int i = 0; i < purchaseCount; i++)
             {
                 var purchase = PackageInfo.PurchaseInformations[i];
                 //投标人
-                sheet.Information.Add(new SheetCellPosition { X = 6 + i, Y = 2 },
+                sheet.Information.Add(new SheetCellPosition {X = isOnePackage ? 5 + i : 6 + i, Y = 2},
                     new CellProperty
                     {
                         Value = purchase.CompanyName,
@@ -83,21 +87,22 @@ namespace TenderingExpert.Data
             sheet.Information.Add(new SheetCellPosition { X = 2, Y = 1 },
                 new CellProperty
                 {
-                    Value = $"项目名称：{TenderInfo.ProjectName}" + WriteSpace(55) + $"项目编号：{TenderInfo.ProjectCode}"
-                });
-
-            sheet.Information.Add(new SheetCellPosition { X = 3, Y = 1 },
-                new CellProperty
-                {
-                    Value = PackageInfo.DeviceName
+                    Value = $"项目名称：{TenderInfo.ProjectName}" + WriteSpace(30) + $"项目编号：{TenderInfo.ProjectCode}"
                 });
 
             var purchaseCount = PackageInfo.PurchaseInformations.Count;
+            if (!isOnePackage)
+                sheet.Information.Add(new SheetCellPosition {X = 3, Y = 1},
+                    new CellProperty
+                    {
+                        Value = PackageInfo.DeviceName
+                    });
+
             for (int i = 0; i < purchaseCount; i++)
             {
                 var purchase = PackageInfo.PurchaseInformations[i];
                 //投标人
-                sheet.Information.Add(new SheetCellPosition {X = 4, Y = 3 + i},
+                sheet.Information.Add(new SheetCellPosition {X = isOnePackage ? 3 : 4, Y = 3 + i},
                     new CellProperty
                     {
                         Value = purchase.CompanyName,
@@ -113,21 +118,22 @@ namespace TenderingExpert.Data
             sheet.Information.Add(new SheetCellPosition { X = 2, Y = 1 },
                 new CellProperty
                 {
-                    Value = $"项目名称：{TenderInfo.ProjectName}" + WriteSpace(55) + $"项目编号：{TenderInfo.ProjectCode}"
-                });
-
-            sheet.Information.Add(new SheetCellPosition { X = 3, Y = 1 },
-                new CellProperty
-                {
-                    Value = PackageInfo.DeviceName
+                    Value = $"项目名称：{TenderInfo.ProjectName}" + WriteSpace(30) + $"项目编号：{TenderInfo.ProjectCode}"
                 });
 
             var purchaseCount = PackageInfo.PurchaseInformations.Count;
+            if (!isOnePackage)
+                sheet.Information.Add(new SheetCellPosition {X = 3, Y = 1},
+                    new CellProperty
+                    {
+                        Value = PackageInfo.DeviceName
+                    });
+
             for (int i = 0; i < purchaseCount; i++)
             {
                 var purchase = PackageInfo.PurchaseInformations[i];
                 //投标人
-                sheet.Information.Add(new SheetCellPosition {X = 5 + i, Y = 1},
+                sheet.Information.Add(new SheetCellPosition {X = isOnePackage ? 4 + i : 5 + i, Y = 1},
                     new CellProperty
                     {
                         Value = purchase.CompanyName,
@@ -139,18 +145,19 @@ namespace TenderingExpert.Data
         {
             var sheet = Sheets.Find(information => information.Name.Contains("表5"));
             sheet.Information.Add(new SheetCellPosition {X = 2, Y = 1},
-                new CellProperty($"项目名称：{TenderInfo.ProjectName}" + WriteSpace(20) + $"项目编号：{TenderInfo.ProjectCode}",
+                new CellProperty($"项目名称：{TenderInfo.ProjectName}" + WriteSpace(30) + $"项目编号：{TenderInfo.ProjectCode}",
                     11));
 
-            sheet.Information.Add(new SheetCellPosition {X = 3, Y = 1},
-                new CellProperty(PackageInfo.DeviceName, 11));
-
             var purchaseCount = PackageInfo.PurchaseInformations.Count;
+            if (!isOnePackage)
+                sheet.Information.Add(new SheetCellPosition {X = 3, Y = 1},
+                    new CellProperty(PackageInfo.DeviceName, 11));
+
             for (int i = 0; i < purchaseCount; i++)
             {
                 var purchase = PackageInfo.PurchaseInformations[i];
                 //投标人
-                sheet.Information.Add(new SheetCellPosition { X = 4, Y = 3 + i },
+                sheet.Information.Add(new SheetCellPosition { X = isOnePackage ? 3 : 4, Y = 3 + i },
                     new CellProperty
                     {
                         Value = purchase.CompanyName,
@@ -164,17 +171,18 @@ namespace TenderingExpert.Data
         {
             var sheet = Sheets.Find(information => information.Name.Contains("表6"));
             sheet.Information.Add(new SheetCellPosition {X = 2, Y = 1},
-                new CellProperty($"项目名称：{TenderInfo.ProjectName}" + WriteSpace(20) + $"项目编号：{TenderInfo.ProjectCode}"));
-
-            sheet.Information.Add(new SheetCellPosition { X = 3, Y = 1 },
-                new CellProperty(PackageInfo.DeviceName));
+                new CellProperty($"项目名称：{TenderInfo.ProjectName}" + WriteSpace(30) + $"项目编号：{TenderInfo.ProjectCode}"));
 
             var purchaseCount = PackageInfo.PurchaseInformations.Count;
+            if (!isOnePackage)
+                sheet.Information.Add(new SheetCellPosition {X = 3, Y = 1},
+                    new CellProperty(PackageInfo.DeviceName));
+
             for (int i = 0; i < purchaseCount; i++)
             {
                 var purchase = PackageInfo.PurchaseInformations[i];
                 //投标人
-                sheet.Information.Add(new SheetCellPosition { X = 5 + i, Y = 1 },
+                sheet.Information.Add(new SheetCellPosition { X = isOnePackage ? 4 + i : 5 + i, Y = 1 },
                     new CellProperty
                     {
                         Value = purchase.CompanyName,
@@ -188,24 +196,26 @@ namespace TenderingExpert.Data
         {
             var sheet = Sheets.Find(information => information.Name.Contains("表7"));
             sheet.Information.Add(new SheetCellPosition {X = 2, Y = 1},
-                new CellProperty($"项目名称：{TenderInfo.ProjectName}" + WriteSpace(20) + $"项目编号：{TenderInfo.ProjectCode}"));
+                new CellProperty($"项目名称：{TenderInfo.ProjectName}" + WriteSpace(30) + $"项目编号：{TenderInfo.ProjectCode}"));
 
-            sheet.Information.Add(new SheetCellPosition { X = 3, Y = 1 },
-                new CellProperty(PackageInfo.DeviceName));
+            var purchaseCount = PackageInfo.PurchaseInformations.Count;
+            if (!isOnePackage)
+                sheet.Information.Add(new SheetCellPosition {X = 3, Y = 1},
+                    new CellProperty(PackageInfo.DeviceName));
 
             var name = PackageInfo.DeviceName.Split('：').Length > 1
                 ? PackageInfo.DeviceName.Split('：')[1]
                 : PackageInfo.DeviceName;
-            sheet.Information.Add(new SheetCellPosition(6, 2),
+            sheet.Information.Add(new SheetCellPosition(isOnePackage ? 5 : 6, 2),
                 new CellProperty($"{name}，{PackageInfo.Quantity}，型号：，单价：人民币 元", 12));
         }
 
         public void FillContent(ExcelWriter writer)
         {
+            writer.AddSheets(Sheets.Select(information => information.Name).ToArray());            
             foreach (SheetInformation sheetInformation in Sheets)
             {
                 var sheetName = sheetInformation.Name;
-                writer.AddSheets(sheetName);
                 //合并单元格
                 foreach (SheetRange range in sheetInformation.MergeCellsPosition)
                     writer.UnitCells(sheetName, range.Left.X, range.Left.Y, range.Right.X, range.Right.Y);
