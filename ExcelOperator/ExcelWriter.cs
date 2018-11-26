@@ -105,7 +105,6 @@ namespace ExcelOperator
         {
             try
             {
-                excelApplication.AlertBeforeOverwriting = false;
                 excelWorkbook.SaveAs(fileName, XlFileFormat.xlWorkbookNormal, Type.Missing, Type.Missing, Type.Missing, Type.Missing,
                     XlSaveAsAccessMode.xlExclusive, Type.Missing, Type.Missing, Type.Missing, Type.Missing,
                     Type.Missing);

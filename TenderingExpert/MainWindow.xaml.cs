@@ -136,6 +136,7 @@ namespace TenderingExpert
                     tenderExcelForm.FillContent(excelWriter);
 
                     var path = Path.Combine(ExcelPath.Text, information.DeviceName);
+                    path = path.Replace("/", "");
                     excelWriter.SaveAs(path);
                     excelWriter.Close();
                 }
