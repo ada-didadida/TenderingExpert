@@ -3,132 +3,220 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TenderingExpert"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="1000" Closed="Window_Closed">
+        Title="TenderExpert" Height="675" Width="1200" Closed="Window_Closed">
     <Grid>
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="8*"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.Column="0" Margin="5" Text="招标文件：" VerticalAlignment="Center"/>
-        <TextBox x:Name="TenderDoc" Margin="10,5,5,5" VerticalContentAlignment="Center"
-                 Grid.Row="0" Grid.Column="1">
-            <TextBox.Resources>
-                <VisualBrush x:Key="HintText" TileMode="None" Opacity="0.5" Stretch="None" AlignmentX="Left">
-                    <VisualBrush.Visual>
-                        <TextBlock FontStyle="Italic" Text="选择招标文件路径"/>
-                    </VisualBrush.Visual>
-                </VisualBrush>
-            </TextBox.Resources>
-            <TextBox.Style>
-                <Style TargetType="TextBox">
-                    <Style.Triggers>
-                        <Trigger Property="Text" Value="{x:Null}">
-                            <Setter Property="Background" Value="{StaticResource HintText}"/>
-                        </Trigger>
-                        <Trigger Property="Text" Value="">
-                            <Setter Property="Background" Value="{StaticResource HintText}"/>
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </TextBox.Style>
-        </TextBox>
-        <Button x:Name="SelectTenderFile" Content="浏览" Grid.Row="0" Grid.Column="2" Margin="5" Click="SelectTenderFile_OnClick"/>
-        <Button x:Name="StartRead" Content="读取" Grid.Row="2" Grid.Column="2" Margin="5" Click="StartRead_OnClick"/>
-        <TextBlock Margin="5" Grid.Row="1" Grid.Column="0" Text="购买名单：" VerticalAlignment="Center"/>
-        <TextBox x:Name="PurchaseDoc" Margin="10,5,5,5" VerticalContentAlignment="Center"
-            Grid.Row="1" Grid.Column="1">
-            <TextBox.Resources>
-                <VisualBrush x:Key="HintText" TileMode="None" Opacity="0.5" Stretch="None" AlignmentX="Left">
-                    <VisualBrush.Visual>
-                        <TextBlock FontStyle="Italic" Text="选择购买名单路径"/>
-                    </VisualBrush.Visual>
-                </VisualBrush>
-            </TextBox.Resources>
-            <TextBox.Style>
-                <Style TargetType="TextBox">
-                    <Style.Triggers>
-                        <Trigger Property="Text" Value="{x:Null}">
-                            <Setter Property="Background" Value="{StaticResource HintText}"/>
-                        </Trigger>
-                        <Trigger Property="Text" Value="">
-                            <Setter Property="Background" Value="{StaticResource HintText}"/>
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </TextBox.Style>
-        </TextBox>
-            <Button x:Name="SelectPurchaseFile" Content="浏览" Grid.Row="1" Grid.Column="2" Margin="5" Click="SelectPurchaseFile_OnClick"/>
-        <TextBlock Margin="5" Grid.Row="2" Grid.Column="0" Text="读取结果：" VerticalAlignment="Center"/>
-        <TextBlock Margin="5" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center"><Run Text="项目名称："/></TextBlock>
-        <TextBox x:Name="ProjectName" Grid.Column="1" Margin="10,5,5,5" Grid.Row="3" Text="{Binding ProjectName}"/>
-        <TextBlock Text="项目编号：" VerticalAlignment="Center" Margin="5" Grid.Row="4" Grid.Column="0" />
-        <TextBox x:Name="ProjectCode" Grid.Column="1" Margin="10,5,5,5" Grid.Row="4" Text="{Binding ProjectCode}"/>
-        <TextBlock Text="开标地点：" VerticalAlignment="Center" Margin="5" Grid.Row="5" Grid.Column="0" />
-        <TextBox x:Name="TenderingAddress" Grid.Column="1" Margin="10,6,5,4" Grid.Row="5" Text="{Binding TenderingAddress}"/>
-        <TextBlock Text="开标时间：" VerticalAlignment="Center" Margin="5" Grid.Row="6" Grid.Column="0" />
-        <TextBox x:Name="TenderingDate" Grid.Column="1" Margin="10,6,5,4" Grid.Row="6" Text="{Binding TenderingDate}"/>
-        <DataGrid x:Name="PackageList" Grid.Column="1" Margin="10,5,5,10" Grid.Row="7" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" CanUserAddRows="False" AutoGenerateColumns="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="设备名称" Binding="{Binding DeviceName}"></DataGridTextColumn>
-                <DataGridTextColumn Header="数量" Binding="{Binding Quantity}"></DataGridTextColumn>
-                <DataGridTextColumn Header="采购预算" Binding="{Binding Budget}"></DataGridTextColumn>
-                <DataGridTextColumn Header="简要规格描述" Binding="{Binding Description}"></DataGridTextColumn>
-                <DataGridTextColumn Header="备注" Binding="{Binding Remarks}"></DataGridTextColumn>
-                <DataGridTemplateColumn Header="购买名单">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <ListBox ItemsSource="{Binding PurchaseInformations}">
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding CompanyName}"></TextBlock>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-            </DataGrid.Columns>
-        </DataGrid>
-        <TextBlock Text="包信息：" VerticalAlignment="Top" Margin="5" Grid.Row="7" Grid.Column="0" />
-        <Button x:Name="CreateExcel" Content="创建" Grid.Row="8" Grid.Column="2" Margin="5" Click="CreateExcel_OnClick"/>
-        <TextBlock Text="生成路径：" VerticalAlignment="Top" Margin="5" Grid.Row="8" Grid.Column="0" />
-        <TextBox x:Name="ExcelPath" Margin="10,5,200,5" VerticalContentAlignment="Center"
-            Grid.Row="8" Grid.Column="1">
-            <TextBox.Resources>
-                <VisualBrush x:Key="HintText" TileMode="None" Opacity="0.5" Stretch="None" AlignmentX="Left">
-                    <VisualBrush.Visual>
-                        <TextBlock FontStyle="Italic" Text="选择Excel生成路径"/>
-                    </VisualBrush.Visual>
-                </VisualBrush>
-            </TextBox.Resources>
-            <TextBox.Style>
-                <Style TargetType="TextBox">
-                    <Style.Triggers>
-                        <Trigger Property="Text" Value="{x:Null}">
-                            <Setter Property="Background" Value="{StaticResource HintText}"/>
-                        </Trigger>
-                        <Trigger Property="Text" Value="">
-                            <Setter Property="Background" Value="{StaticResource HintText}"/>
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </TextBox.Style>
-        </TextBox>
-            <Button x:Name="SelectExcelPath" Content="浏览" Grid.Column="1" Margin="500,5,5,5" Grid.Row="8" Width="100" HorizontalAlignment="Right" Click="SelectExcelPath_OnClick"/>
+        <GridSplitter Width="6" Grid.Column="1" HorizontalAlignment="Center" Grid.RowSpan="3"/>
+
+        <Grid Grid.Column="0" Margin="10,0,5,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" Margin="3" Text="招标文件：" VerticalAlignment="Center"/>
+            <TextBox x:Name="TenderDoc" Margin="5" VerticalContentAlignment="Center"
+                 Grid.Row="0" Grid.Column="1" VerticalAlignment="Center">
+                <TextBox.Resources>
+                    <VisualBrush x:Key="HintText" TileMode="None" Opacity="0.5" Stretch="None" AlignmentX="Left">
+                        <VisualBrush.Visual>
+                            <TextBlock FontStyle="Italic" Text="选择招标文件路径"/>
+                        </VisualBrush.Visual>
+                    </VisualBrush>
+                </TextBox.Resources>
+                <TextBox.Style>
+                    <Style TargetType="TextBox">
+                        <Style.Triggers>
+                            <Trigger Property="Text" Value="{x:Null}">
+                                <Setter Property="Background" Value="{StaticResource HintText}"/>
+                            </Trigger>
+                            <Trigger Property="Text" Value="">
+                                <Setter Property="Background" Value="{StaticResource HintText}"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
+            <Button x:Name="SelectTenderFile" Content="浏览" Grid.Row="0" Grid.Column="2" Margin="3,5" Click="SelectTenderFile_OnClick" VerticalAlignment="Center"/>
+
+            <TextBlock Margin="3" Grid.Row="1" Grid.Column="0" Text="购买名单：" VerticalAlignment="Center"/>
+            <TextBox x:Name="PurchaseDoc" Margin="5" VerticalContentAlignment="Center"
+                 Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
+                <TextBox.Resources>
+                    <VisualBrush x:Key="HintText" TileMode="None" Opacity="0.5" Stretch="None" AlignmentX="Left">
+                        <VisualBrush.Visual>
+                            <TextBlock FontStyle="Italic" Text="选择购买名单路径"/>
+                        </VisualBrush.Visual>
+                    </VisualBrush>
+                </TextBox.Resources>
+                <TextBox.Style>
+                    <Style TargetType="TextBox">
+                        <Style.Triggers>
+                            <Trigger Property="Text" Value="{x:Null}">
+                                <Setter Property="Background" Value="{StaticResource HintText}"/>
+                            </Trigger>
+                            <Trigger Property="Text" Value="">
+                                <Setter Property="Background" Value="{StaticResource HintText}"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
+            <Button x:Name="SelectPurchaseFile" Content="浏览" Grid.Row="1" Grid.Column="2" Margin="3,5" Click="SelectPurchaseFile_OnClick" VerticalAlignment="Center"/>
+
+            <TextBlock Margin="3" Grid.Row="2" Grid.Column="0" Text="读取结果：" VerticalAlignment="Center"/>
+            <Button x:Name="StartRead" Content="读取" Grid.Row="2" Grid.Column="2" Margin="3,5" Click="StartRead_OnClick" VerticalAlignment="Center"/>
+
+            <ScrollViewer Margin="5" Grid.Row="3" Grid.ColumnSpan="3" Grid.Column="0">
+                <TextBox x:Name="WordContent"></TextBox>
+            </ScrollViewer>
+
+            <TextBlock Grid.Row="4" Grid.Column="0" Text="当前文档：" VerticalAlignment="Center" Margin="3"></TextBlock>
+            <ComboBox x:Name="CurrentFile" Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" SelectionChanged="CurrentFile_OnSelectionChanged">
+                <ComboBoxItem IsSelected="True">招标文件</ComboBoxItem>
+                <ComboBoxItem>购买名单</ComboBoxItem>
+            </ComboBox>
+
+            <Grid Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button x:Name="AutoRead" Grid.Column="0" Margin="1,6" Content="自动读取" Click="AutoRead_Click"  VerticalAlignment="Center"/>
+
+                <Button Grid.Column="1" Margin="1,6" Content="上一页" VerticalAlignment="Center" Click="PrePage_Click"></Button>
+                <Button Grid.Column="2" Margin="1,6" Content="下一页" VerticalAlignment="Center" Click="NextPage_Click"></Button>
+
+                <TextBlock Grid.Column="3" Text="跳转到：" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="1,0"></TextBlock>
+                <TextBox x:Name="Page" Grid.Column="4" VerticalAlignment="Center" Margin="1,0">
+                    <TextBox.Resources>
+                        <VisualBrush x:Key="HintText" TileMode="None" Opacity="0.5" Stretch="None" AlignmentX="Left">
+                            <VisualBrush.Visual>
+                                <TextBlock FontStyle="Italic" Text="页数"/>
+                            </VisualBrush.Visual>
+                        </VisualBrush>
+                    </TextBox.Resources>
+                    <TextBox.Style>
+                        <Style TargetType="TextBox">
+                            <Style.Triggers>
+                                <Trigger Property="Text" Value="{x:Null}">
+                                    <Setter Property="Background" Value="{StaticResource HintText}"/>
+                                </Trigger>
+                                <Trigger Property="Text" Value="">
+                                    <Setter Property="Background" Value="{StaticResource HintText}"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBox.Style>
+                </TextBox>
+
+                <Button Grid.Column="5" Margin="1,6" Content="前往" VerticalAlignment="Center" Click="JumpToPage_Click"></Button>
+
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Column="2" Margin="10,0,5,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="5*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="项目名称：" Margin="3" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"></TextBlock>
+            <TextBox x:Name="ProjectName" Grid.Column="1" Margin="5" Grid.Row="0" Text="{Binding ProjectName}" VerticalAlignment="Center" />
+
+            <TextBlock Text="项目编号：" VerticalAlignment="Center" Margin="3" Grid.Row="1" Grid.Column="0" />
+            <TextBox x:Name="ProjectCode" Grid.Column="1" Margin="5" Grid.Row="1" Text="{Binding ProjectCode}" VerticalAlignment="Center" />
+
+            <TextBlock Text="开标地点：" VerticalAlignment="Center" Margin="3" Grid.Row="2" Grid.Column="0" />
+            <TextBox x:Name="TenderingAddress" Grid.Column="1" Margin="5" Grid.Row="2" Text="{Binding TenderingAddress}" VerticalAlignment="Center"/>
+
+            <TextBlock Text="开标时间：" VerticalAlignment="Center" Margin="5" Grid.Row="3" Grid.Column="0" />
+            <TextBox x:Name="TenderingDate" Grid.Column="1" Margin="5" Grid.Row="3" Text="{Binding TenderingDate}" VerticalAlignment="Center" />
+
+            <TextBlock Text="包信息：" VerticalAlignment="Top" Margin="3" Grid.Row="4" Grid.Column="0" />
+            <DataGrid x:Name="PackageList" Grid.Column="1" Margin="5" Grid.Row="4" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" CanUserAddRows="False" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="设备名称" Binding="{Binding DeviceName}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="数量" Binding="{Binding Quantity}"></DataGridTextColumn>
+                    <DataGridTemplateColumn Header="购买名单">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ListBox ItemsSource="{Binding PurchaseInformations}">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBox Text="{Binding CompanyName}"></TextBox>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <Grid Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="生成路径：" VerticalAlignment="Center" Margin="3" Grid.Column="0" />
+                <TextBox x:Name="ExcelPath" Grid.Column="1" Margin="5" VerticalAlignment="Center">
+                    <TextBox.Resources>
+                        <VisualBrush x:Key="HintText" TileMode="None" Opacity="0.5" Stretch="None" AlignmentX="Left">
+                            <VisualBrush.Visual>
+                                <TextBlock FontStyle="Italic" Text="选择Excel生成路径"/>
+                            </VisualBrush.Visual>
+                        </VisualBrush>
+                    </TextBox.Resources>
+                    <TextBox.Style>
+                        <Style TargetType="TextBox">
+                            <Style.Triggers>
+                                <Trigger Property="Text" Value="{x:Null}">
+                                    <Setter Property="Background" Value="{StaticResource HintText}"/>
+                                </Trigger>
+                                <Trigger Property="Text" Value="">
+                                    <Setter Property="Background" Value="{StaticResource HintText}"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBox.Style>
+                </TextBox>
+
+                <Button Grid.Column="2" Margin="3,5" Content="浏览" Click="SelectExcelPath_OnClick" VerticalAlignment="Center"></Button>
+                <Button x:Name="CreateExcel" Grid.Column="3" Margin="3,5" Content="创建" Click="CreateExcel_OnClick" VerticalAlignment="Center"></Button>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>

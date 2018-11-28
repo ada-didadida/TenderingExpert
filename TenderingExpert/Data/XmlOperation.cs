@@ -51,7 +51,7 @@ namespace TenderingExpert.Data
                 }
                 catch (Exception e)
                 {
-                    throw new XmlException("Can not load config file", e);
+                    throw new XmlException($"Can not load config file. {e.Message}", e);
                 }
             }
         }

@@ -43,31 +43,29 @@ namespace WordOperator
             }
             catch (Exception e)
             {
-                throw new Exception("无法打开文档", e);
+                throw new Exception($"无法打开文档 {e.Message}", e);
             }
         }
 
-        public string GetParagraphsContent(int paragraphIndex)
+        public int GetPageCount()
         {
-            return wordDocument != null ? wordDocument.Paragraphs[paragraphIndex].Range.Text : string.Empty;
+            return wordDocument.ComputeStatistics(WdStatistic.wdStatisticPages);
         }
 
-        public int GetParagraphsCount()
+        public string ReadPage(int page)
         {
-            if(wordDocument != null)
-                return wordDocument.Paragraphs.Count;
+            if (page > GetPageCount())
+                return string.Empty;
 
-            return 0;
-        }
+            Range startRange = wordDocument.GoTo(WdGoToItem.wdGoToPage, WdGoToDirection.wdGoToAbsolute, page);
+            Range endRange = startRange.GoToNext(WdGoToItem.wdGoToPage);
 
-        public string GetAllContent()
-        {
-            var result = string.Empty;
+            if (startRange.Start == endRange.Start)
+            {
+                return wordDocument.Range(startRange.Start, wordDocument.Characters.Count).Text;
+            }
 
-            foreach (Paragraph paragraph in wordDocument.Paragraphs)
-                result += paragraph.Range.Text + "\n";
-
-            return result;
+            return wordDocument.Range(startRange.Start, endRange.Start).Text;
         }
 
         public string FindKeyValue(string key)
@@ -118,7 +116,7 @@ namespace WordOperator
         {
             if (wordApplication == null) return;
 
-            wordDocument?.Close(ref unknown, ref unknown, ref unknown);
+            wordDocument?.Close(false, ref unknown, ref unknown);
             wordApplication.Quit(ref unknown, ref unknown, ref unknown);
 
             System.Runtime.InteropServices.Marshal.ReleaseComObject(wordApplication);

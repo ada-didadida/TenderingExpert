@@ -113,7 +113,7 @@ namespace ExcelOperator
             }
             catch (Exception exception)
             {
-                throw new Exception("保存失败!",exception);
+                throw new Exception($"保存失败!{exception.Message}",exception);
             }
         }
 
