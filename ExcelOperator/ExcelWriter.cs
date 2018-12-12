@@ -1,5 +1,5 @@
 ﻿using System;
-using Microsoft.Office.Interop.Excel;
+using Excel;
 
 namespace ExcelOperator
 {
@@ -126,9 +126,9 @@ namespace ExcelOperator
             excelApplication.Quit();
 
             System.Runtime.InteropServices.Marshal.ReleaseComObject(excelApplication);
-            excelWorkbook = null;
-            excelWorkbooks = null;
-            excelApplication = null;
+//            excelWorkbook = null;
+//            excelWorkbooks = null;
+//            excelApplication = null;
 
             GC.Collect();
         }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Microsoft.Office.Interop.Word;
+using Word;
 
 namespace WordOperator
 {
